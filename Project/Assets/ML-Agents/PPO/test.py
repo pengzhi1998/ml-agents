@@ -1,6 +1,6 @@
 from mlagents_envs.environment import UnityEnvironment
 from gym_unity.envs import UnityToGymWrapper
-
+import numpy as np
 print("hello0!\n\n\n")
 
 # unity_env = UnityEnvironment("/home/pengzhi1998/Unity/AUV_Unity_Simulation/AUV_arena_2020/robot")
@@ -20,4 +20,5 @@ while True:
     while not done:
         obs, reward, done, _ = env.step(1)
         obs, reward, done, _ = env.step(3)
+        print("obs", obs, "\n\n\n\n")
 
