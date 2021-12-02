@@ -7,96 +7,58 @@ using Unity.MLAgents.Actuators;
 
 public class PushAgentBasic : Agent
 {
-    /// <summary>
-    /// The ground. The bounds are used to spawn the elements.
-    /// </summary>
-    public GameObject ground;
+//    public GameObject ground;
 
-    public GameObject area;
-
-    /// <summary>
-    /// The area bounds.
-    /// </summary>
     [HideInInspector]
-    public Bounds areaBounds;
 
-    PushBlockSettings m_PushBlockSettings;
+//    PushBlockSettings m_PushBlockSettings;
 
-    /// <summary>
-    /// The goal to push the block to.
-    /// </summary>
-    public GameObject goal;
-
-    /// <summary>
-    /// The block to be pushed to the goal.
-    /// </summary>
-    public GameObject block;
+    /// The goal for the agent to reach.
+//    public GameObject goal;
 
     /// <summary>
     /// Detects when the block touches the goal.
     /// </summary>
-    [HideInInspector]
-    public GoalDetect goalDetect;
+//    [HideInInspector]
+//    public GoalDetect goalDetect;
 
     public bool useVectorObs;
 
-    Rigidbody m_BlockRb;  //cached on initialization
     Rigidbody m_AgentRb;  //cached on initialization
-    Material m_GroundMaterial; //cached on Awake()
+//    Material m_GroundMaterial; //cached on Awake()
 
     /// <summary>
     /// We will be changing the ground material based on success/failue
     /// </summary>
-    Renderer m_GroundRenderer;
-
-    EnvironmentParameters m_ResetParams;
+//    Renderer m_GroundRenderer;
 
     void Awake()
     {
-        m_PushBlockSettings = FindObjectOfType<PushBlockSettings>();
+//        m_PushBlockSettings = FindObjectOfType<PushBlockSettings>();
     }
 
     public override void Initialize()
     {
-        goalDetect = block.GetComponent<GoalDetect>();
-        goalDetect.agent = this;
-
         // Cache the agent rigidbody
         m_AgentRb = GetComponent<Rigidbody>();
-        // Cache the block rigidbody
-        m_BlockRb = block.GetComponent<Rigidbody>();
-        // Get the ground's bounds
-        areaBounds = ground.GetComponent<Collider>().bounds;
         // Get the ground renderer so we can change the material when a goal is scored
-        m_GroundRenderer = ground.GetComponent<Renderer>();
+//        m_GroundRenderer = ground.GetComponent<Renderer>();
         // Starting material
-        m_GroundMaterial = m_GroundRenderer.material;
-
-        m_ResetParams = Academy.Instance.EnvironmentParameters;
+//        m_GroundMaterial = m_GroundRenderer.material;
 
         SetResetParameters();
     }
 
-    /// <summary>
-    /// Use the ground's bounds to pick a random spawn position.
-    /// </summary>
+    /// randomize the initial position
     public Vector3 GetRandomSpawnPos()
     {
-        var foundNewSpawnLocation = false;
         var randomSpawnPos = Vector3.zero;
-        while (foundNewSpawnLocation == false)
-        {
-            var randomPosX = Random.Range(-areaBounds.extents.x * m_PushBlockSettings.spawnAreaMarginMultiplier,
-                areaBounds.extents.x * m_PushBlockSettings.spawnAreaMarginMultiplier);
 
-            var randomPosZ = Random.Range(-areaBounds.extents.z * m_PushBlockSettings.spawnAreaMarginMultiplier,
-                areaBounds.extents.z * m_PushBlockSettings.spawnAreaMarginMultiplier);
-            randomSpawnPos = ground.transform.position + new Vector3(randomPosX, 1f, randomPosZ);
-            if (Physics.CheckBox(randomSpawnPos, new Vector3(2.5f, 0.01f, 2.5f)) == false)
-            {
-                foundNewSpawnLocation = true;
-            }
-        }
+        var randomPosX = Random.Range(-5f, -4f);
+        var randomPosZ = Random.Range(-5f, -4f);
+        var randomPosY = Random.Range(-1.2f, -0.8f);
+        randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
+
         return randomSpawnPos;
     }
 
@@ -112,7 +74,7 @@ public class PushAgentBasic : Agent
         EndEpisode();
 
         // Swap ground material for a bit to indicate we scored.
-        StartCoroutine(GoalScoredSwapGroundMaterial(m_PushBlockSettings.goalScoredMaterial, 0.5f));
+//        StartCoroutine(GoalScoredSwapGroundMaterial(m_PushBlockSettings.goalScoredMaterial, 0.5f));
     }
 
     /// <summary>
@@ -120,9 +82,9 @@ public class PushAgentBasic : Agent
     /// </summary>
     IEnumerator GoalScoredSwapGroundMaterial(Material mat, float time)
     {
-        m_GroundRenderer.material = mat;
+//        m_GroundRenderer.material = mat;
         yield return new WaitForSeconds(time); // Wait for 2 sec
-        m_GroundRenderer.material = m_GroundMaterial;
+//        m_GroundRenderer.material = m_GroundMaterial;
     }
 
     /// <summary>
@@ -163,8 +125,7 @@ public class PushAgentBasic : Agent
                 break;
         }
         transform.Rotate(rotateDir, Time.fixedDeltaTime * 200f);
-        m_AgentRb.AddForce(dirToGo * m_PushBlockSettings.agentRunSpeed,
-            ForceMode.VelocityChange);
+        m_AgentRb.AddForce(dirToGo * 0.25f, ForceMode.VelocityChange);
     }
 
     /// <summary>
@@ -204,16 +165,16 @@ public class PushAgentBasic : Agent
     /// <summary>
     /// Resets the block position and velocities.
     /// </summary>
-    void ResetBlock()
+    void ResetGoal()
     {
-        // Get a random position for the block.
-        block.transform.position = GetRandomSpawnPos();
-
-        // Reset block velocity back to zero.
-        m_BlockRb.velocity = Vector3.zero;
-
-        // Reset block angularVelocity back to zero.
-        m_BlockRb.angularVelocity = Vector3.zero;
+//        // Get a random position for the block.
+//        block.transform.position = GetRandomSpawnPos();
+//
+//        // Reset block velocity back to zero.
+//        m_BlockRb.velocity = Vector3.zero;
+//
+//        // Reset block angularVelocity back to zero.
+//        m_BlockRb.angularVelocity = Vector3.zero;
     }
 
     /// <summary>
@@ -224,9 +185,7 @@ public class PushAgentBasic : Agent
     {
         var rotation = Random.Range(0, 4);
         var rotationAngle = rotation * 90f;
-        area.transform.Rotate(new Vector3(0f, rotationAngle, 0f));
 
-        ResetBlock();
         transform.position = GetRandomSpawnPos();
         m_AgentRb.velocity = Vector3.zero;
         m_AgentRb.angularVelocity = Vector3.zero;
@@ -234,27 +193,9 @@ public class PushAgentBasic : Agent
         SetResetParameters();
     }
 
-    public void SetGroundMaterialFriction()
-    {
-        var groundCollider = ground.GetComponent<Collider>();
-
-        groundCollider.material.dynamicFriction = m_ResetParams.GetWithDefault("dynamic_friction", 0);
-        groundCollider.material.staticFriction = m_ResetParams.GetWithDefault("static_friction", 0);
-    }
-
-    public void SetBlockProperties()
-    {
-        var scale = m_ResetParams.GetWithDefault("block_scale", 2);
-        //Set the scale of the block
-        m_BlockRb.transform.localScale = new Vector3(scale, 0.75f, scale);
-
-        // Set the drag of the block
-        m_BlockRb.drag = m_ResetParams.GetWithDefault("block_drag", 0.5f);
-    }
-
+//    set the haze, fog and attenuation here
     void SetResetParameters()
     {
-        SetGroundMaterialFriction();
-        SetBlockProperties();
+//        SetWaterCondition();
     }
 }
