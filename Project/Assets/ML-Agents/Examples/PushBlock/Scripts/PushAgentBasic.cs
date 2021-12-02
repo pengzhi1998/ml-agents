@@ -155,6 +155,12 @@ public class PushAgentBasic : Agent
             case 6:
                 dirToGo = transform.right * 0.75f;
                 break;
+            case 7:
+                dirToGo = transform.up * 1.0f;
+                break;
+            case 8:
+                dirToGo = transform.up * -1.0f;
+                break;
         }
         transform.Rotate(rotateDir, Time.fixedDeltaTime * 200f);
         m_AgentRb.AddForce(dirToGo * m_PushBlockSettings.agentRunSpeed,

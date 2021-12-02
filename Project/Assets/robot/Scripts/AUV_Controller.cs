@@ -9,10 +9,11 @@ using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgentsExamples;
 
-public class AUV_Controller : MonoBehaviour
+public class AUV_Controller : Agent
 {
     public float speed = 50;
     public float torque = 10;
+
     //public GameObject Left_thruster;
     //public GameObject Right_thruster;
 
