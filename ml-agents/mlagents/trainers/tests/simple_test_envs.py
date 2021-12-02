@@ -386,7 +386,7 @@ class MultiAgentEnvironment(BaseEnv):
                 )
                 self.dones[name_and_num] = False
                 self.envs[name_and_num].reset()
-        # All envs have the same behavior spec, so just get the last one.
+        # All environments have the same behavior spec, so just get the last one.
         self.behavior_spec = self.envs[name_and_num].behavior_spec
         self.action_spec = self.envs[name_and_num].action_spec
         self.num_agents = num_agents
@@ -426,7 +426,7 @@ class MultiAgentEnvironment(BaseEnv):
 
     def get_steps(self, behavior_name):
         # This gets the individual DecisionSteps and TerminalSteps
-        # from the envs and merges them into a batch to be sent
+        # from the environments and merges them into a batch to be sent
         # to the AgentProcessor.
         dec_vec_obs = []
         dec_reward = []

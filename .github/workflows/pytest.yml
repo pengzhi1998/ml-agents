@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:  # This action will only run if the PR modifies a file in one of these directories
     - 'ml-agents/**'
-    - 'ml-agents-envs/**'
+    - 'ml-agents-environments/**'
     - 'gym-unity/**'
     - 'test_constraints*.txt'
     - 'test_requirements.txt'
@@ -41,7 +41,7 @@ jobs:
         # This path is specific to Ubuntu
         path: ~/.cache/pip
         # Look to see if there is a cache hit for the corresponding requirements file
-        key: ${{ runner.os }}-pip-${{ hashFiles('ml-agents/setup.py', 'ml-agents-envs/setup.py', 'gym-unity/setup.py', 'test_requirements.txt', matrix.pip_constraints) }}
+        key: ${{ runner.os }}-pip-${{ hashFiles('ml-agents/setup.py', 'ml-agents-environments/setup.py', 'gym-unity/setup.py', 'test_requirements.txt', matrix.pip_constraints) }}
         restore-keys: |
           ${{ runner.os }}-pip-
           ${{ runner.os }}-
@@ -61,7 +61,7 @@ jobs:
         pip freeze > pip_versions-${{ matrix.python-version }}.txt
         cat pip_versions-${{ matrix.python-version }}.txt
     - name: Run pytest
-      run: pytest --cov=ml-agents --cov=ml-agents-envs --cov=gym-unity --cov-report html --junitxml=junit/test-results-${{ matrix.python-version }}.xml -p no:warnings -v
+      run: pytest --cov=ml-agents --cov=ml-agents-environments --cov=gym-unity --cov-report html --junitxml=junit/test-results-${{ matrix.python-version }}.xml -p no:warnings -v
     - name: Upload pytest test results
       uses: actions/upload-artifact@v2
       with:

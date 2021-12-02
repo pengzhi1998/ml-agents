@@ -8,7 +8,7 @@
 
 SRC_DIR=proto/mlagents_envs/communicator_objects
 DST_DIR_C=../com.unity.ml-agents/Runtime/Grpc/CommunicatorObjects
-DST_DIR_P=../ml-agents-envs
+DST_DIR_P=../ml-agents-environments
 PROTO_PATH=proto
 PYTHON_PACKAGE=mlagents_envs/communicator_objects
 

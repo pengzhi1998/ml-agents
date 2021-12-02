@@ -489,7 +489,7 @@ def test_environment_settings():
     # 1 env is OK if no env_path
     EnvironmentSettings(num_envs=1)
 
-    # multiple envs is OK if env_path is set
+    # multiple environments is OK if env_path is set
     EnvironmentSettings(num_envs=42, env_path="/foo/bar.exe")
 
     # Multiple environments with no env_path is an error

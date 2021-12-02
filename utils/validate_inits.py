@@ -40,7 +40,7 @@ def validate_packages(root_dir):
 
 
 def main():
-    for root_dir in ["ml-agents", "ml-agents-envs", "gym-unity"]:
+    for root_dir in ["ml-agents", "ml-agents-environments", "gym-unity"]:
         validate_packages(root_dir)
 
 

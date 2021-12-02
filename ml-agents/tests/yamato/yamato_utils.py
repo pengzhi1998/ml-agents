@@ -145,7 +145,7 @@ def init_venv(
         ]
     else:
         # Local install
-        pip_commands += ["-e ./ml-agents-envs", "-e ./ml-agents", "-e ./gym-unity"]
+        pip_commands += ["-e ./ml-agents-environments", "-e ./ml-agents", "-e ./gym-unity"]
     if extra_packages:
         pip_commands += extra_packages
 

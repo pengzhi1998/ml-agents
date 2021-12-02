@@ -22,7 +22,7 @@ if os.getenv("TEST_ENFORCE_NUMPY_FLOAT32"):
             # Only raise if this came from mlagents code
             if (
                 "ml-agents/mlagents" in filename
-                or "ml-agents-envs/mlagents" in filename
+                or "ml-agents-environments/mlagents" in filename
             ):
                 raise ValueError(
                     f"float64 array created. Set dtype=np.float32 instead of current dtype={kwargs_dtype}. "

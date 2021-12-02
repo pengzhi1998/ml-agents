@@ -7,7 +7,7 @@
 /Builds
 
 # Training environments
-/envs
+/environments
 
 # Environemnt logfile
 *Project.log

@@ -17,8 +17,8 @@ repos:
         files: "ml-agents/.*"
         args: [--ignore-missing-imports, --disallow-incomplete-defs]
     -   id: mypy
-        name: mypy-ml-agents-envs
-        files: "ml-agents-envs/.*"
+        name: mypy-ml-agents-environments
+        files: "ml-agents-environments/.*"
         # Exclude protobuf files and don't follow them when imported
         exclude: ".*_pb2.py"
         args: [--ignore-missing-imports, --disallow-incomplete-defs]
@@ -129,6 +129,6 @@ repos:
     -   id: generate-markdown-docs
         name: generate markdown docs
         language: python
-        entry: ./utils/generate_markdown_docs.py --package_dirs ml-agents-envs
+        entry: ./utils/generate_markdown_docs.py --package_dirs ml-agents-environments
         pass_filenames: false
         additional_dependencies: [pyyaml, pydoc-markdown==3.10.1]

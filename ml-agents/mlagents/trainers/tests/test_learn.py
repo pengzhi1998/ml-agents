@@ -140,7 +140,7 @@ def test_commandline_args(mock_file):
         "--train",
         "--base-port=4004",
         "--initialize-from=testdir",
-        "--num-envs=2",
+        "--num-environments=2",
         "--no-graphics",
         "--debug",
     ]
@@ -184,7 +184,7 @@ def test_yaml_args(mock_file):
         "--seed=7890",
         "--train",
         "--base-port=4004",
-        "--num-envs=2",
+        "--num-environments=2",
         "--no-graphics",
         "--debug",
         "--results-dir=myresults",

@@ -154,7 +154,7 @@ def _create_parser() -> argparse.ArgumentParser:
         action=DetectDefault,
     )
     argparser.add_argument(
-        "--num-envs",
+        "--num-environments",
         default=1,
         type=int,
         help="The number of concurrent Unity environment instances to collect experiences "

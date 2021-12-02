@@ -10,7 +10,7 @@ VERSION_LINE_START = "__version__ = "
 
 DIRECTORIES = [
     "ml-agents/mlagents/trainers",
-    "ml-agents-envs/mlagents_envs",
+    "ml-agents-environments/mlagents_envs",
     "gym-unity/gym_unity",
 ]
 
