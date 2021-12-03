@@ -22,5 +22,7 @@ while True:
         # obs, reward, done, _ = env.step(1)
         obs, reward, done, _ = env.step(3)
 
-        print("obs", obs, "\n\n\n\n")
+        cv2.imwrite("img.png", 256 * cv2.cvtColor(obs[0], cv2.COLOR_RGB2BGR))
+
+        print("obs", obs[0], "\n\n\n\n")
 

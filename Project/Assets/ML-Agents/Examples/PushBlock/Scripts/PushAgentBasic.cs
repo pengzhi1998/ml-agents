@@ -50,7 +50,7 @@ public class PushAgentBasic : Agent
     }
 
     /// randomize the initial position
-    public Vector3 GetRandomSpawnPos()
+    public (Vector3, Vector3, Vector3) GetRandomSpawnPos()
     {
         var randomSpawnPos_Robot = Vector3.zero;
         var randomSpawnPos_Goal = Vector3.zero;
@@ -77,8 +77,9 @@ public class PushAgentBasic : Agent
                 var randomGoalZ = Random.Range(-4.5f, -3.5f);
             }
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
+            randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
 
-            return randomSpawnPos;
+            return (randomSpawnPos, rotationAngle, randomGoal);
         }
 
         else if (chance_Robot < 0.55f) {
@@ -100,8 +101,9 @@ public class PushAgentBasic : Agent
                 var randomGoalZ = Random.Range(3.5f, 4f);
             }
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
+            randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
 
-            return randomSpawnPos;
+            return (randomSpawnPos, rotationAngle, randomGoal);
         }
 
         else if (chance_Robot < 0.8f) {
@@ -123,8 +125,9 @@ public class PushAgentBasic : Agent
                 var randomGoalZ = Random.Range(3.5f, 4f);
             }
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
+            randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
 
-            return randomSpawnPos;
+            return (randomSpawnPos, rotationAngle, randomGoal);
         }
 
         else if (chance_Robot < 0.9f) {
@@ -138,8 +141,9 @@ public class PushAgentBasic : Agent
             var randomGoalY = Random.Range(-2f, -1f);
             var randomGoalZ = Random.Range(8f, 9f);
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
+            randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
 
-            return randomSpawnPos;
+            return (randomSpawnPos, rotationAngle, randomGoal);
         }
 
         else {
@@ -154,8 +158,9 @@ public class PushAgentBasic : Agent
             var randomGoalZ = Random.Range(8f, 9f);
 
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
+            randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
 
-            return randomSpawnPos;
+            return (randomSpawnPos, rotationAngle, randomGoal);
         }
 
 
@@ -262,30 +267,15 @@ public class PushAgentBasic : Agent
     }
 
     /// <summary>
-    /// Resets the block position and velocities.
-    /// </summary>
-    void ResetGoal()
-    {
-//        // Get a random position for the block.
-//        block.transform.position = GetRandomSpawnPos();
-//
-//        // Reset block velocity back to zero.
-//        m_BlockRb.velocity = Vector3.zero;
-//
-//        // Reset block angularVelocity back to zero.
-//        m_BlockRb.angularVelocity = Vector3.zero;
-    }
-
-    /// <summary>
     /// In the editor, if "Reset On Done" is checked then AgentReset() will be
     /// called automatically anytime we mark done = true in an agent script.
     /// </summary>
     public override void OnEpisodeBegin()
     {
-        var rotation = Random.Range(0, 4);
-        var rotationAngle = rotation * 90f;
+        random_robot_goal = GetRandomSpawnPos();
+        m_AgentRb.transform.position = random_robot_goal.Item1;
+        m_AgentRb.transform.Rotate = random_robot_goal.Item2;
 
-        transform.position = GetRandomSpawnPos();
         m_AgentRb.velocity = Vector3.zero;
         m_AgentRb.angularVelocity = Vector3.zero;
 
