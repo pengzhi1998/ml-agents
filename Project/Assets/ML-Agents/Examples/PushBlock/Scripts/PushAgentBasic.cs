@@ -52,14 +52,113 @@ public class PushAgentBasic : Agent
     /// randomize the initial position
     public Vector3 GetRandomSpawnPos()
     {
+        var randomSpawnPos_Robot = Vector3.zero;
+        var randomSpawnPos_Goal = Vector3.zero;
+
         var randomSpawnPos = Vector3.zero;
 
-        var randomPosX = Random.Range(-5f, -4f);
-        var randomPosZ = Random.Range(-5f, -4f);
-        var randomPosY = Random.Range(-1.2f, -0.8f);
-        randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
+        float chance_Robot = Random.Range(0f, 1f);
+        if (chance_Robot < 0.3f) {
+            var randomPosX = Random.Range(-1f, 1f);
+            var randomPosY = Random.Range(-2f, -1f);
+            var randomPosZ = Random.Range(3f, 4.5f);
 
-        return randomSpawnPos;
+            var rotationAngle = Random.Range(90f, 270f);
+
+            float chance_Goal = Random.Range(0f, 1f);
+            if (chance_Goal < 0.5f) {
+                var randomGoalX = Random.Range(-4f, -3f);
+                var randomGoalY = Random.Range(-2f, -1f);
+                var randomGoalZ = Random.Range(-4.5f, -3.5f);
+            }
+            else {
+                var randomGoalX = Random.Range(3f, 4f);
+                var randomGoalY = Random.Range(-2f, -1f);
+                var randomGoalZ = Random.Range(-4.5f, -3.5f);
+            }
+            randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
+
+            return randomSpawnPos;
+        }
+
+        else if (chance_Robot < 0.55f) {
+            var randomPosX = Random.Range(-4f, -3f);
+            var randomPosY = Random.Range(-2f, -1f);
+            var randomPosZ = Random.Range(-4.5f, -3.5f);
+
+            var rotationAngle = Random.Range(-45f, 135f);
+
+            float chance_Goal = Random.Range(0f, 1f);
+            if (chance_Goal < 0.5f) {
+                var randomGoalX = Random.Range(-4f, -3f);
+                var randomGoalY = Random.Range(-1.5f, -1f);
+                var randomGoalZ = Random.Range(3.5f, 4f);
+            }
+            else {
+                var randomGoalX = Random.Range(3f, 4f);
+                var randomGoalY = Random.Range(-2f, -1.5f);
+                var randomGoalZ = Random.Range(3.5f, 4f);
+            }
+            randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
+
+            return randomSpawnPos;
+        }
+
+        else if (chance_Robot < 0.8f) {
+            var randomPosX = Random.Range(3f, 4f);
+            var randomPosY = Random.Range(-2f, -1f);
+            var randomPosZ = Random.Range(-4.5f, -3.5f);
+
+            var rotationAngle = Random.Range(-135f, 45f);
+
+            float chance_Goal = Random.Range(0f, 1f);
+            if (chance_Goal < 0.5f) {
+                var randomGoalX = Random.Range(-4f, -3f);
+                var randomGoalY = Random.Range(-1.5f, -1f);
+                var randomGoalZ = Random.Range(3.5f, 4f);
+            }
+            else {
+                var randomGoalX = Random.Range(3f, 4f);
+                var randomGoalY = Random.Range(-2f, -1.5f);
+                var randomGoalZ = Random.Range(3.5f, 4f);
+            }
+            randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
+
+            return randomSpawnPos;
+        }
+
+        else if (chance_Robot < 0.9f) {
+            var randomPosX = Random.Range(-9f, -8f);
+            var randomPosY = Random.Range(-2f, -1f);
+            var randomPosZ = Random.Range(4.5f, 5.5f);
+
+            var rotationAngle = Random.Range(-45f, 45f);
+
+            var randomGoalX = Random.Range(8f, 9f);
+            var randomGoalY = Random.Range(-2f, -1f);
+            var randomGoalZ = Random.Range(8f, 9f);
+            randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
+
+            return randomSpawnPos;
+        }
+
+        else {
+            var randomPosX = Random.Range(8f, 9f);
+            var randomPosY = Random.Range(-2f, -1f);
+            var randomPosZ = Random.Range(4.5f, 5.5f);
+
+            var rotationAngle = Random.Range(-45f, 45f);
+
+            var randomGoalX = Random.Range(-9f, -8f);
+            var randomGoalY = Random.Range(-2f, -1f);
+            var randomGoalZ = Random.Range(8f, 9f);
+
+            randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
+
+            return randomSpawnPos;
+        }
+
+
     }
 
     /// <summary>
