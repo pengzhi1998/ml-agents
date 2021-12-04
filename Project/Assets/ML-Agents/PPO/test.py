@@ -21,7 +21,7 @@ while True:
     done = False
     while not done:
         # first action defines its motion vertically, second defines its rotation
-        obs, reward, done, _ = env.step([0., 0.25])
+        obs, reward, done, _ = env.step([0., 0.])
 
         cv2.imwrite("img.png", 256 * cv2.cvtColor(obs[0], cv2.COLOR_RGB2BGR))
 

@@ -9,6 +9,8 @@ public class PushAgentBasic : Agent
 {
 //    public GameObject ground;
 
+    public textchanging Textchanging;
+
     [HideInInspector]
 
 //    PushBlockSettings m_PushBlockSettings;
@@ -207,6 +209,8 @@ public class PushAgentBasic : Agent
 
         transform.Rotate(rotateDir, Time.fixedDeltaTime * 200f);
         m_AgentRb.AddForce(dirToGo, ForceMode.VelocityChange);
+
+        Textchanging.show_position(0.5f);
     }
 
     /// <summary>
