@@ -197,13 +197,13 @@ public class PushAgentBasic : Agent
     /// <summary>
     /// Moves the agent according to the selected action.
     /// </summary>
-    public void MoveAgent(float act0, float act1, float act2)
+    public void MoveAgent(float act0, float act1)
     {
         var dirToGo = Vector3.zero;
         var rotateDir = Vector3.zero;
 
-        dirToGo = transform.forward * act0 + transform.up * act1;
-        rotateDir = transform.up * act2;
+        dirToGo = transform.forward * 0.25f + transform.up * act0;
+        rotateDir = transform.up * act1;
 
         transform.Rotate(rotateDir, Time.fixedDeltaTime * 200f);
         m_AgentRb.AddForce(dirToGo, ForceMode.VelocityChange);
@@ -217,31 +217,10 @@ public class PushAgentBasic : Agent
     {
         // Move the agent using the action.
         var continuous_actions = actionBuffers.ContinuousActions;
-        MoveAgent(continuous_actions[0], continuous_actions[1], continuous_actions[2]);
+        MoveAgent(continuous_actions[0], continuous_actions[1]);
 
         // Penalty given each step to encourage agent to finish task quickly.
         AddReward(-1f / MaxStep);
-    }
-
-    public override void Heuristic(in ActionBuffers actionsOut)
-    {
-        var discreteActionsOut = actionsOut.DiscreteActions;
-        if (Input.GetKey(KeyCode.D))
-        {
-            discreteActionsOut[0] = 3;
-        }
-        else if (Input.GetKey(KeyCode.W))
-        {
-            discreteActionsOut[0] = 1;
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            discreteActionsOut[0] = 4;
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            discreteActionsOut[0] = 2;
-        }
     }
 
     /// <summary>

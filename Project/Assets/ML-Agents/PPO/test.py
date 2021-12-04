@@ -7,6 +7,7 @@ print("hello0!\n\n\n")
 # unity_env = UnityEnvironment("/home/pengzhi1998/Unity/AUV_Unity_Simulation/AUV_arena_2020/robot")
 # unity_env = UnityEnvironment("/home/pengzhi1998/Unity/ml-agents/pushblock")
 unity_env = UnityEnvironment("/home/pengzhi1998/Unity/ml-agents/environments/water")
+# unity_env = UnityEnvironment("/home/pengzhi1998/Unity/ml-agents/environments/3DBall")
 
 print("hello1!\n\n\n")
 
@@ -19,8 +20,8 @@ while True:
     env.reset()
     done = False
     while not done:
-        # obs, reward, done, _ = env.step(1)
-        obs, reward, done, _ = env.step(3)
+        # first action defines its motion vertically, second defines its rotation
+        obs, reward, done, _ = env.step([0., 0.25])
 
         cv2.imwrite("img.png", 256 * cv2.cvtColor(obs[0], cv2.COLOR_RGB2BGR))
 
