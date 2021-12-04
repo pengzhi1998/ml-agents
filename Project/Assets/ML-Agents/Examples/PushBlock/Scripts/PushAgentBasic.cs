@@ -54,7 +54,6 @@ public class PushAgentBasic : Agent
     /// randomize the initial position
     public (Vector3, float, Vector3) GetRandomSpawnPos()
     {
-        var randomSpawnPos_Robot = Vector3.zero;
         var randomSpawnPos = Vector3.zero;
 
         var randomGoalX = 0f;
@@ -84,6 +83,8 @@ public class PushAgentBasic : Agent
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
             randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
 
+            Textchanging.show_position(randomSpawnPos, rotationAngle, randomGoal);
+
             return (randomSpawnPos, rotationAngle, randomGoal);
         }
 
@@ -107,6 +108,8 @@ public class PushAgentBasic : Agent
             }
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
             randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
+
+            Textchanging.show_position(randomSpawnPos, rotationAngle, randomGoal);
 
             return (randomSpawnPos, rotationAngle, randomGoal);
         }
@@ -132,6 +135,8 @@ public class PushAgentBasic : Agent
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
             randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
 
+            Textchanging.show_position(randomSpawnPos, rotationAngle, randomGoal);
+
             return (randomSpawnPos, rotationAngle, randomGoal);
         }
 
@@ -147,6 +152,8 @@ public class PushAgentBasic : Agent
             randomGoalZ = Random.Range(8f, 9f);
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
             randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
+
+            Textchanging.show_position(randomSpawnPos, rotationAngle, randomGoal);
 
             return (randomSpawnPos, rotationAngle, randomGoal);
         }
@@ -164,6 +171,8 @@ public class PushAgentBasic : Agent
 
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
             randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
+
+            Textchanging.show_position(randomSpawnPos, rotationAngle, randomGoal);
 
             return (randomSpawnPos, rotationAngle, randomGoal);
         }
@@ -209,8 +218,6 @@ public class PushAgentBasic : Agent
 
         transform.Rotate(rotateDir, Time.fixedDeltaTime * 200f);
         m_AgentRb.AddForce(dirToGo, ForceMode.VelocityChange);
-
-        Textchanging.show_position(0.5f);
     }
 
     /// <summary>

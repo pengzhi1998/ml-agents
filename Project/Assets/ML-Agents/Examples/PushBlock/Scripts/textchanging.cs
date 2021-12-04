@@ -15,9 +15,11 @@ public class textchanging : MonoBehaviour
     void Update() {
     }
 
-    public void show_position(float pos) {
+//    Textchanging.show_position(randomSpawnPos, rotationAngle, randomGoal);
+
+    public void show_position(Vector3 pos_rb, float rotation, Vector3 pos_goal) {
         Text txtMy = GameObject.Find("Canvas/Text").GetComponent<Text>();
-        txtMy.text = "The text has been changed";
+        txtMy.text = rotation.ToString("0.0000");
 //        txtMy.text = pos.ToString("0.0000");
     }
 }
