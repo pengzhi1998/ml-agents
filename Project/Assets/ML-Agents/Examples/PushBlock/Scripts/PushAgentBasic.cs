@@ -50,12 +50,15 @@ public class PushAgentBasic : Agent
     }
 
     /// randomize the initial position
-    public (Vector3, Vector3, Vector3) GetRandomSpawnPos()
+    public (Vector3, float, Vector3) GetRandomSpawnPos()
     {
         var randomSpawnPos_Robot = Vector3.zero;
-        var randomSpawnPos_Goal = Vector3.zero;
-
         var randomSpawnPos = Vector3.zero;
+
+        var randomGoalX = 0f;
+        var randomGoalY = 0f;
+        var randomGoalZ = 0f;
+        var randomGoal = Vector3.zero;
 
         float chance_Robot = Random.Range(0f, 1f);
         if (chance_Robot < 0.3f) {
@@ -63,18 +66,18 @@ public class PushAgentBasic : Agent
             var randomPosY = Random.Range(-2f, -1f);
             var randomPosZ = Random.Range(3f, 4.5f);
 
-            var rotationAngle = Random.Range(90f, 270f);
+            float rotationAngle = Random.Range(90f, 270f);
 
             float chance_Goal = Random.Range(0f, 1f);
             if (chance_Goal < 0.5f) {
-                var randomGoalX = Random.Range(-4f, -3f);
-                var randomGoalY = Random.Range(-2f, -1f);
-                var randomGoalZ = Random.Range(-4.5f, -3.5f);
+                randomGoalX = Random.Range(-4f, -3f);
+                randomGoalY = Random.Range(-2f, -1f);
+                randomGoalZ = Random.Range(-4.5f, -3.5f);
             }
             else {
-                var randomGoalX = Random.Range(3f, 4f);
-                var randomGoalY = Random.Range(-2f, -1f);
-                var randomGoalZ = Random.Range(-4.5f, -3.5f);
+                randomGoalX = Random.Range(3f, 4f);
+                randomGoalY = Random.Range(-2f, -1f);
+                randomGoalZ = Random.Range(-4.5f, -3.5f);
             }
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
             randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
@@ -87,18 +90,18 @@ public class PushAgentBasic : Agent
             var randomPosY = Random.Range(-2f, -1f);
             var randomPosZ = Random.Range(-4.5f, -3.5f);
 
-            var rotationAngle = Random.Range(-45f, 135f);
+            float rotationAngle = Random.Range(-45f, 135f);
 
             float chance_Goal = Random.Range(0f, 1f);
             if (chance_Goal < 0.5f) {
-                var randomGoalX = Random.Range(-4f, -3f);
-                var randomGoalY = Random.Range(-1.5f, -1f);
-                var randomGoalZ = Random.Range(3.5f, 4f);
+                randomGoalX = Random.Range(-4f, -3f);
+                randomGoalY = Random.Range(-1.5f, -1f);
+                randomGoalZ = Random.Range(3.5f, 4f);
             }
             else {
-                var randomGoalX = Random.Range(3f, 4f);
-                var randomGoalY = Random.Range(-2f, -1.5f);
-                var randomGoalZ = Random.Range(3.5f, 4f);
+                randomGoalX = Random.Range(3f, 4f);
+                randomGoalY = Random.Range(-2f, -1.5f);
+                randomGoalZ = Random.Range(3.5f, 4f);
             }
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
             randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
@@ -111,18 +114,18 @@ public class PushAgentBasic : Agent
             var randomPosY = Random.Range(-2f, -1f);
             var randomPosZ = Random.Range(-4.5f, -3.5f);
 
-            var rotationAngle = Random.Range(-135f, 45f);
+            float rotationAngle = Random.Range(-135f, 45f);
 
             float chance_Goal = Random.Range(0f, 1f);
             if (chance_Goal < 0.5f) {
-                var randomGoalX = Random.Range(-4f, -3f);
-                var randomGoalY = Random.Range(-1.5f, -1f);
-                var randomGoalZ = Random.Range(3.5f, 4f);
+                randomGoalX = Random.Range(-4f, -3f);
+                randomGoalY = Random.Range(-1.5f, -1f);
+                randomGoalZ = Random.Range(3.5f, 4f);
             }
             else {
-                var randomGoalX = Random.Range(3f, 4f);
-                var randomGoalY = Random.Range(-2f, -1.5f);
-                var randomGoalZ = Random.Range(3.5f, 4f);
+                randomGoalX = Random.Range(3f, 4f);
+                randomGoalY = Random.Range(-2f, -1.5f);
+                randomGoalZ = Random.Range(3.5f, 4f);
             }
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
             randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
@@ -135,11 +138,11 @@ public class PushAgentBasic : Agent
             var randomPosY = Random.Range(-2f, -1f);
             var randomPosZ = Random.Range(4.5f, 5.5f);
 
-            var rotationAngle = Random.Range(-45f, 45f);
+            float rotationAngle = Random.Range(-45f, 45f);
 
-            var randomGoalX = Random.Range(8f, 9f);
-            var randomGoalY = Random.Range(-2f, -1f);
-            var randomGoalZ = Random.Range(8f, 9f);
+            randomGoalX = Random.Range(8f, 9f);
+            randomGoalY = Random.Range(-2f, -1f);
+            randomGoalZ = Random.Range(8f, 9f);
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
             randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
 
@@ -151,11 +154,11 @@ public class PushAgentBasic : Agent
             var randomPosY = Random.Range(-2f, -1f);
             var randomPosZ = Random.Range(4.5f, 5.5f);
 
-            var rotationAngle = Random.Range(-45f, 45f);
+            float rotationAngle = Random.Range(-45f, 45f);
 
-            var randomGoalX = Random.Range(-9f, -8f);
-            var randomGoalY = Random.Range(-2f, -1f);
-            var randomGoalZ = Random.Range(8f, 9f);
+            randomGoalX = Random.Range(-9f, -8f);
+            randomGoalY = Random.Range(-2f, -1f);
+            randomGoalZ = Random.Range(8f, 9f);
 
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
             randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
@@ -194,42 +197,16 @@ public class PushAgentBasic : Agent
     /// <summary>
     /// Moves the agent according to the selected action.
     /// </summary>
-    public void MoveAgent(ActionSegment<int> act)
+    public void MoveAgent(float act0, float act1, float act2)
     {
         var dirToGo = Vector3.zero;
         var rotateDir = Vector3.zero;
 
-        var action = act[0];
+        dirToGo = transform.forward * act0 + transform.up * act1;
+        rotateDir = transform.up * act2;
 
-        switch (action)
-        {
-            case 1:
-                dirToGo = transform.forward * 1f;
-                break;
-            case 2:
-                dirToGo = transform.forward * -1f;
-                break;
-            case 3:
-                rotateDir = transform.up * 1f;
-                break;
-            case 4:
-                rotateDir = transform.up * -1f;
-                break;
-            case 5:
-                dirToGo = transform.right * -0.75f;
-                break;
-            case 6:
-                dirToGo = transform.right * 0.75f;
-                break;
-            case 7:
-                dirToGo = transform.up * 1.0f;
-                break;
-            case 8:
-                dirToGo = transform.up * -1.0f;
-                break;
-        }
         transform.Rotate(rotateDir, Time.fixedDeltaTime * 200f);
-        m_AgentRb.AddForce(dirToGo * 0.25f, ForceMode.VelocityChange);
+        m_AgentRb.AddForce(dirToGo, ForceMode.VelocityChange);
     }
 
     /// <summary>
@@ -239,7 +216,8 @@ public class PushAgentBasic : Agent
 
     {
         // Move the agent using the action.
-        MoveAgent(actionBuffers.DiscreteActions);
+        var continuous_actions = actionBuffers.ContinuousActions;
+        MoveAgent(continuous_actions[0], continuous_actions[1], continuous_actions[2]);
 
         // Penalty given each step to encourage agent to finish task quickly.
         AddReward(-1f / MaxStep);
@@ -272,9 +250,9 @@ public class PushAgentBasic : Agent
     /// </summary>
     public override void OnEpisodeBegin()
     {
-        random_robot_goal = GetRandomSpawnPos();
+        var random_robot_goal = GetRandomSpawnPos();
         m_AgentRb.transform.position = random_robot_goal.Item1;
-        m_AgentRb.transform.Rotate = random_robot_goal.Item2;
+        m_AgentRb.transform.Rotate(new Vector3(0f, random_robot_goal.Item2, 0f));
 
         m_AgentRb.velocity = Vector3.zero;
         m_AgentRb.angularVelocity = Vector3.zero;
