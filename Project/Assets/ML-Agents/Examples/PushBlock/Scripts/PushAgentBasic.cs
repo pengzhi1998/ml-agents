@@ -1,5 +1,5 @@
 //Put this script on your blue cube.
-
+using static System.Math;
 using System.Collections;
 using UnityEngine;
 using Unity.MLAgents;
@@ -216,7 +216,7 @@ public class PushAgentBasic : Agent
         dirToGo = transform.forward * 0.25f + transform.up * act0;
         rotateDir = transform.up * act1;
 
-        transform.Rotate(rotateDir, Time.fixedDeltaTime * 200f);
+        transform.Rotate(rotateDir, Time.fixedDeltaTime * 20f * Abs(act1));
         m_AgentRb.AddForce(dirToGo, ForceMode.VelocityChange);
     }
 
@@ -242,7 +242,9 @@ public class PushAgentBasic : Agent
     {
         var random_robot_goal = GetRandomSpawnPos();
         m_AgentRb.transform.position = random_robot_goal.Item1;
-        m_AgentRb.transform.Rotate(new Vector3(0f, random_robot_goal.Item2, 0f));
+        m_AgentRb.transform.eulerAngles = new Vector3(0f, random_robot_goal.Item2, 0f);
+//        m_AgentRb.transform.Rotate(0f, random_robot_goal.Item2, 0f, Space.World);
+//        m_AgentRb.transform.Rotate(new Vector3(0f, random_robot_goal.Item2, 0f), Space.World);
 
         m_AgentRb.velocity = Vector3.zero;
         m_AgentRb.angularVelocity = Vector3.zero;
