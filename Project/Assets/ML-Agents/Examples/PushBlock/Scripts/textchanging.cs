@@ -19,7 +19,8 @@ public class textchanging : MonoBehaviour
 
     public void show_position(Vector3 pos_rb, float rotation, Vector3 pos_goal) {
         Text txtMy = GameObject.Find("Canvas/Text").GetComponent<Text>();
-        txtMy.text = "Current Orientation" + rotation.ToString("0.0000");
+        txtMy.text = "Current Pos: " + pos_rb + "\nCurrent Rot: " + rotation.ToString("0.0000") +
+         "\nCurrent Goal: " + pos_goal;
 //        txtMy.text = pos.ToString("0.0000");
     }
 }

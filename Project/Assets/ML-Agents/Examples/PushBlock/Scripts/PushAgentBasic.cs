@@ -51,14 +51,14 @@ public class PushAgentBasic : Agent
         SetResetParameters();
     }
 
+    public static float randomGoalX = 0f;
+    public static float randomGoalY = 0f;
+    public static float randomGoalZ = 0f;
+
     /// randomize the initial position
     public (Vector3, float, Vector3) GetRandomSpawnPos()
     {
         var randomSpawnPos = Vector3.zero;
-
-        var randomGoalX = 0f;
-        var randomGoalY = 0f;
-        var randomGoalZ = 0f;
         var randomGoal = Vector3.zero;
 
         float chance_Robot = Random.Range(0f, 1f);
@@ -219,8 +219,8 @@ public class PushAgentBasic : Agent
         transform.Rotate(rotateDir, Time.fixedDeltaTime * 20f * Abs(act1));
         m_AgentRb.AddForce(dirToGo, ForceMode.VelocityChange);
 
-        Textchanging.show_position(new Vector3(0f,0f,0f), m_AgentRb.transform.eulerAngles[1],
-            new Vector3(0f,0f,0f));
+        Textchanging.show_position(m_AgentRb.transform.position, m_AgentRb.transform.eulerAngles[1],
+            new Vector3(randomGoalX, randomGoalY, randomGoalZ));
     }
 
     /// <summary>
@@ -252,6 +252,37 @@ public class PushAgentBasic : Agent
 
         SetResetParameters();
     }
+
+//    public var GetGoalInfo() {
+//		euler = tf.transformations.euler_from_quaternion(self.quaternion)  # the euler orientation
+//		yaw = euler[2]
+//		R2G = np.array(np.array(self.goal) - np.array([self.self_position_x, self.self_position_y])) # the vector of robot towarding the goal
+//		distance = np.sqrt(R2G[0]**2 + R2G[1]**2)
+//		if yaw < 0:
+//			yaw = yaw + 2*np.pi
+//		rob_ori = np.array([np.cos(yaw), np.sin(yaw)]) # the orientation vector of the robot
+//		angle = np.arccos(R2G.dot(rob_ori)/np.sqrt((R2G.dot(R2G)) * np.sqrt(rob_ori.dot(rob_ori))))
+//
+//		# determine whether the goal is on the right or left hand side of the robot
+//		if rob_ori[0] > 0 and (rob_ori[1]/rob_ori[0]) * R2G[0] > R2G[1]:
+//				angle = -angle
+//		elif rob_ori[0] < 0 and (rob_ori[1]/rob_ori[0]) * R2G[0] < R2G[1]:
+//				angle = -angle
+//		elif rob_ori[0] == 0:
+//			if rob_ori[1] > 0 and R2G[0] > 0:
+//				angle = -angle
+//			elif rob_ori[1] < 0 and R2G[0] < 0:
+//				angle = -angle
+//
+//		goal = np.array([distance, angle])
+//		# print("goal_position, current_position, distance, angle:{:.2f}, {:.2f}, {:.2f}, {:.2f}, {:.2f}, {:.2f}".
+//		# 	  format(self.goal, (self.self_position_x, self.self_position_y), goal))
+//		# print("goal_position, current_position, distance, angle: {:.2f}, {:.2f}, {:.2f}, {:.2f}, {:.2f}, {:.2f}".
+//		# 	  format(np.array(self.goal)[0], np.array(self.goal)[1],
+//		# 			 self.self_position_x, self.self_position_y,
+//		# 			 goal[0], goal[1]))
+//		return goal
+//    }
 
 //    set the haze, fog and attenuation here
     void SetResetParameters()
