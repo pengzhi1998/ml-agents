@@ -83,8 +83,6 @@ public class PushAgentBasic : Agent
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
             randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
 
-            Textchanging.show_position(randomSpawnPos, m_AgentRb.transform.eulerAngles[1], randomGoal);
-
             return (randomSpawnPos, rotationAngle, randomGoal);
         }
 
@@ -108,8 +106,6 @@ public class PushAgentBasic : Agent
             }
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
             randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
-
-            Textchanging.show_position(randomSpawnPos, rotationAngle, randomGoal);
 
             return (randomSpawnPos, rotationAngle, randomGoal);
         }
@@ -135,8 +131,6 @@ public class PushAgentBasic : Agent
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
             randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
 
-            Textchanging.show_position(randomSpawnPos, rotationAngle, randomGoal);
-
             return (randomSpawnPos, rotationAngle, randomGoal);
         }
 
@@ -152,8 +146,6 @@ public class PushAgentBasic : Agent
             randomGoalZ = Random.Range(8f, 9f);
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
             randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
-
-            Textchanging.show_position(randomSpawnPos, rotationAngle, randomGoal);
 
             return (randomSpawnPos, rotationAngle, randomGoal);
         }
@@ -171,8 +163,6 @@ public class PushAgentBasic : Agent
 
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
             randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
-
-            Textchanging.show_position(randomSpawnPos, rotationAngle, randomGoal);
 
             return (randomSpawnPos, rotationAngle, randomGoal);
         }
@@ -218,9 +208,6 @@ public class PushAgentBasic : Agent
 
         transform.Rotate(rotateDir, Time.fixedDeltaTime * 20f * Abs(act1));
         m_AgentRb.AddForce(dirToGo, ForceMode.VelocityChange);
-
-        Textchanging.show_position(m_AgentRb.transform.position, m_AgentRb.transform.eulerAngles[1],
-            new Vector3(randomGoalX, randomGoalY, randomGoalZ));
     }
 
     /// <summary>
@@ -234,6 +221,10 @@ public class PushAgentBasic : Agent
         MoveAgent(continuous_actions[0], continuous_actions[1]);
 
         // Penalty given each step to encourage agent to finish task quickly.
+        var GoalInfo = GetGoalInfo(); // horizontal_distance, vertical_distance, angle_rb_2_g
+
+        Textchanging.show_position(m_AgentRb.transform.position, m_AgentRb.transform.eulerAngles[1],
+            new Vector3(randomGoalX, randomGoalY, randomGoalZ), GoalInfo.Item1, GoalInfo.Item2, GoalInfo.Item3);
         AddReward(-1f / MaxStep);
     }
 
@@ -253,36 +244,32 @@ public class PushAgentBasic : Agent
         SetResetParameters();
     }
 
-//    public var GetGoalInfo() {
-//		euler = tf.transformations.euler_from_quaternion(self.quaternion)  # the euler orientation
-//		yaw = euler[2]
-//		R2G = np.array(np.array(self.goal) - np.array([self.self_position_x, self.self_position_y])) # the vector of robot towarding the goal
-//		distance = np.sqrt(R2G[0]**2 + R2G[1]**2)
-//		if yaw < 0:
-//			yaw = yaw + 2*np.pi
-//		rob_ori = np.array([np.cos(yaw), np.sin(yaw)]) # the orientation vector of the robot
-//		angle = np.arccos(R2G.dot(rob_ori)/np.sqrt((R2G.dot(R2G)) * np.sqrt(rob_ori.dot(rob_ori))))
-//
-//		# determine whether the goal is on the right or left hand side of the robot
-//		if rob_ori[0] > 0 and (rob_ori[1]/rob_ori[0]) * R2G[0] > R2G[1]:
-//				angle = -angle
-//		elif rob_ori[0] < 0 and (rob_ori[1]/rob_ori[0]) * R2G[0] < R2G[1]:
-//				angle = -angle
-//		elif rob_ori[0] == 0:
-//			if rob_ori[1] > 0 and R2G[0] > 0:
-//				angle = -angle
-//			elif rob_ori[1] < 0 and R2G[0] < 0:
-//				angle = -angle
-//
-//		goal = np.array([distance, angle])
-//		# print("goal_position, current_position, distance, angle:{:.2f}, {:.2f}, {:.2f}, {:.2f}, {:.2f}, {:.2f}".
-//		# 	  format(self.goal, (self.self_position_x, self.self_position_y), goal))
-//		# print("goal_position, current_position, distance, angle: {:.2f}, {:.2f}, {:.2f}, {:.2f}, {:.2f}, {:.2f}".
-//		# 	  format(np.array(self.goal)[0], np.array(self.goal)[1],
-//		# 			 self.self_position_x, self.self_position_y,
-//		# 			 goal[0], goal[1]))
-//		return goal
-//    }
+    /// <summary>
+    /// Compute the relative goal information for reward and observation
+    /// </summary>
+    public static float horizontal_distance = 0f;
+    public static float angle_rb_2_g = 0f;
+    public (float, float, float) GetGoalInfo() {
+        Vector3 Current_pos = m_AgentRb.transform.position;
+        float Current_rot = m_AgentRb.transform.eulerAngles[1];
+
+        /// first compute the distance from robot to goal
+        horizontal_distance = (float)Sqrt((float)Pow(Current_pos[0] - randomGoalX, 2) +
+            (float)Pow(Current_pos[1] - randomGoalY, 2) + (float)Pow(Current_pos[2] - randomGoalZ, 2));
+
+        /// secondly compute the angle the robot needs to turn to face the goal
+        Vector3 angle_goal_vector = new Vector3(randomGoalX - Current_pos[0],
+            randomGoalY - Current_pos[1], randomGoalZ - Current_pos[2]);
+        Vector3 angle_goal_vector_proj = angle_goal_vector - Vector3.Project(angle_goal_vector, Vector3.up);
+        double angle_orientation = 90f - Current_rot;
+        Vector3 angle_orientation_vector = new Vector3((float)Cos(angle_orientation), 0f, (float)Sin(angle_orientation));
+
+        angle_rb_2_g = Vector3.Angle(angle_orientation_vector, angle_goal_vector_proj);
+        float dir = (Vector3.Dot(Vector3.up, Vector3.Cross(angle_orientation_vector, angle_goal_vector_proj)) < 0 ? -1 : 1);
+        angle_rb_2_g *= dir; // source implementation: https://blog.csdn.net/qq_14838361/article/details/79459391
+
+        return (horizontal_distance, angle_goal_vector[1], angle_rb_2_g);
+    }
 
 //    set the haze, fog and attenuation here
     void SetResetParameters()
