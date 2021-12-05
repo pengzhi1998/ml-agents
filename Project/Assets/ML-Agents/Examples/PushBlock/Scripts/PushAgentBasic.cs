@@ -83,7 +83,7 @@ public class PushAgentBasic : Agent
             randomSpawnPos = new Vector3(randomPosX, randomPosY, randomPosZ);
             randomGoal = new Vector3(randomGoalX, randomGoalY, randomGoalZ);
 
-            Textchanging.show_position(randomSpawnPos, rotationAngle, randomGoal);
+            Textchanging.show_position(randomSpawnPos, m_AgentRb.transform.eulerAngles[1], randomGoal);
 
             return (randomSpawnPos, rotationAngle, randomGoal);
         }
@@ -218,6 +218,9 @@ public class PushAgentBasic : Agent
 
         transform.Rotate(rotateDir, Time.fixedDeltaTime * 20f * Abs(act1));
         m_AgentRb.AddForce(dirToGo, ForceMode.VelocityChange);
+
+        Textchanging.show_position(new Vector3(0f,0f,0f), m_AgentRb.transform.eulerAngles[1],
+            new Vector3(0f,0f,0f));
     }
 
     /// <summary>
@@ -243,8 +246,6 @@ public class PushAgentBasic : Agent
         var random_robot_goal = GetRandomSpawnPos();
         m_AgentRb.transform.position = random_robot_goal.Item1;
         m_AgentRb.transform.eulerAngles = new Vector3(0f, random_robot_goal.Item2, 0f);
-//        m_AgentRb.transform.Rotate(0f, random_robot_goal.Item2, 0f, Space.World);
-//        m_AgentRb.transform.Rotate(new Vector3(0f, random_robot_goal.Item2, 0f), Space.World);
 
         m_AgentRb.velocity = Vector3.zero;
         m_AgentRb.angularVelocity = Vector3.zero;

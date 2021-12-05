@@ -23,10 +23,10 @@ while True:
     while not done:
         # first action defines its motion vertically, second defines its rotation
         if t < 10:
-            obs, reward, done, _ = env.step([0.20, 1.0])
+            obs, reward, done, _ = env.step([0.0, 1.])
             print("a", t)
         else:
-            obs, reward, done, _ = env.step([-0.20, -1.0])
+            obs, reward, done, _ = env.step([0.0, 0.0])
             print("b", t)
         t += 1
 
