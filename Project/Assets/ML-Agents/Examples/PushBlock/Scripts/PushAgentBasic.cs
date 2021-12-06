@@ -251,7 +251,7 @@ public class PushAgentBasic : Agent
     public static float angle_rb_2_g = 0f;
     public (float, float, float) GetGoalInfo() {
         Vector3 Current_pos = m_AgentRb.transform.position;
-        float Current_rot = m_AgentRb.transform.eulerAngles[1];
+//        float Current_rot = m_AgentRb.transform.eulerAngles[1];
 
         /// first compute the distance from robot to goal
         horizontal_distance = (float)Sqrt((float)Pow(Current_pos[0] - randomGoalX, 2) +
@@ -261,14 +261,15 @@ public class PushAgentBasic : Agent
         Vector3 angle_goal_vector = new Vector3(randomGoalX - Current_pos[0],
             randomGoalY - Current_pos[1], randomGoalZ - Current_pos[2]);
         Vector3 angle_goal_vector_proj = angle_goal_vector - Vector3.Project(angle_goal_vector, Vector3.up);
-        double angle_orientation = 90f - Current_rot;
-        Vector3 angle_orientation_vector = new Vector3((float)Cos(angle_orientation), 0f, (float)Sin(angle_orientation));
+//        double angle_orientation = Current_rot;
+//        double angle_orientation = 90f - Current_rot;
+//        Vector3 angle_orientation_vector = new Vector3((float)Cos(angle_orientation), 0f, (float)Sin(angle_orientation));
 
-        angle_rb_2_g = Vector3.Angle(angle_orientation_vector, angle_goal_vector_proj);
-        float dir = (Vector3.Dot(Vector3.up, Vector3.Cross(angle_orientation_vector, angle_goal_vector_proj)) < 0 ? -1 : 1);
+        angle_rb_2_g = Vector3.Angle(m_AgentRb.transform.forward, angle_goal_vector_proj);
+        float dir = (Vector3.Dot(Vector3.up, Vector3.Cross(m_AgentRb.transform.forward, angle_goal_vector_proj)) < 0 ? -1 : 1);
         angle_rb_2_g *= dir; // source implementation: https://blog.csdn.net/qq_14838361/article/details/79459391
 
-        return (horizontal_distance, angle_goal_vector[1], angle_rb_2_g);
+        return (horizontal_distance, 0f, angle_rb_2_g);
     }
 
 //    set the haze, fog and attenuation here
