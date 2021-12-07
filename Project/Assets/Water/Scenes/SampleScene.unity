@@ -386,7 +386,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4188187884171146, guid: 03bcc81e249714a22bb411dddcc5d15e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.37
+      value: 3.88
       objectReference: {fileID: 0}
     - target: {fileID: 4188187884171146, guid: 03bcc81e249714a22bb411dddcc5d15e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -394,27 +394,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4188187884171146, guid: 03bcc81e249714a22bb411dddcc5d15e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.72
+      value: -4.46
       objectReference: {fileID: 0}
     - target: {fileID: 4188187884171146, guid: 03bcc81e249714a22bb411dddcc5d15e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.729617
+      value: 0.9991662
       objectReference: {fileID: 0}
     - target: {fileID: 4188187884171146, guid: 03bcc81e249714a22bb411dddcc5d15e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4188187884171146, guid: 03bcc81e249714a22bb411dddcc5d15e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.683856
+      value: 0.040829387
       objectReference: {fileID: 0}
     - target: {fileID: 4188187884171146, guid: 03bcc81e249714a22bb411dddcc5d15e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4188187884171146, guid: 03bcc81e249714a22bb411dddcc5d15e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 86.291
+      value: 4.68
       objectReference: {fileID: 0}
     - target: {fileID: 4491958117158432, guid: 03bcc81e249714a22bb411dddcc5d15e, type: 3}
       propertyPath: m_LocalScale.x
@@ -563,13 +563,23 @@ PrefabInstance:
       objectReference: {fileID: 330503378}
     - target: {fileID: 114807072692257076, guid: 03bcc81e249714a22bb411dddcc5d15e,
         type: 3}
+      propertyPath: m_RayLength
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114807072692257076, guid: 03bcc81e249714a22bb411dddcc5d15e,
+        type: 3}
       propertyPath: m_RaysPerDirection
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 114807072692257076, guid: 03bcc81e249714a22bb411dddcc5d15e,
         type: 3}
       propertyPath: m_ObservationStacks
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114807072692257076, guid: 03bcc81e249714a22bb411dddcc5d15e,
+        type: 3}
+      propertyPath: m_DetectableTags.Array.size
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114451319691753174, guid: 03bcc81e249714a22bb411dddcc5d15e, type: 3}

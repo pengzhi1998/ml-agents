@@ -33,20 +33,44 @@ class Underwater_navigation():
     def reset(self):
         obs_img_ray = self.env.reset()
         obs_goal = self.pos_info.goal_info()
-        return obs_img_ray[0], obs_img_ray[1], obs_goal
+        return [obs_img_ray[0], np.min([obs_img_ray[1][1], obs_img_ray[1][3], obs_img_ray[1][5]]) * 12 * 0.8, obs_goal]
 
 
     def step(self, action):
         obs_img_ray, _, done, _ = self.env.step(action)
         obs_goal = self.pos_info.goal_info()
+        done = False
 
-        return [obs_img_ray[0], obs_img_ray[1], obs_goal], 0, done, 0
+        # compute reward
+        # 1. give a negative reward when robot is too close to nearby obstacles
+        obstacle_dis = np.min([obs_img_ray[1][1], obs_img_ray[1][3], obs_img_ray[1][5],
+                             obs_img_ray[1][7], obs_img_ray[1][9], obs_img_ray[1][11],
+                             obs_img_ray[1][13], obs_img_ray[1][15], obs_img_ray[1][17],
+                             obs_img_ray[1][19], obs_img_ray[1][21]]) * 12 * 0.8
+        if obstacle_dis < 0.6:
+            reward_ray = -10
+            done = True
+        else:
+            reward_ray = 0
+
+        # 2. give a positive reward if the robot reaches the goal
+        if obs_goal[0] < 0.3 and obs_goal[1] < 0.05:
+            reward_goal = 10
+            done = True
+        else:
+            reward_goal = 0
+
+        # 3.
+
+        # the observation value for ray should be scaled
+        return [obs_img_ray[0], np.min([obs_img_ray[1][1], obs_img_ray[1][3], obs_img_ray[1][5]]) * 12 * 0.8, obs_goal], 0, done, 0
 
 env = Underwater_navigation()
 
 while True:
     done = False
     obs = env.reset()
+    print("new episode!\n\n\n")
     # cv2.imwrite("img1.png", 256 * cv2.cvtColor(obs[0], cv2.COLOR_RGB2BGR))
     while not done:
         obs, reward, done, _ = env.step([0.0, 0.0])
