@@ -541,6 +541,11 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114451319691753174, guid: 03bcc81e249714a22bb411dddcc5d15e,
+        type: 3}
+      propertyPath: m_ObservationStacks
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 114505490781873732, guid: 03bcc81e249714a22bb411dddcc5d15e,
         type: 3}
       propertyPath: ground
@@ -559,9 +564,15 @@ PrefabInstance:
     - target: {fileID: 114807072692257076, guid: 03bcc81e249714a22bb411dddcc5d15e,
         type: 3}
       propertyPath: m_RaysPerDirection
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114807072692257076, guid: 03bcc81e249714a22bb411dddcc5d15e,
+        type: 3}
+      propertyPath: m_ObservationStacks
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114451319691753174, guid: 03bcc81e249714a22bb411dddcc5d15e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 03bcc81e249714a22bb411dddcc5d15e, type: 3}
 --- !u!4 &219754587 stripped
 Transform:

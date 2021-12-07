@@ -11,56 +11,34 @@ public class PushAgentBasic : Agent
 {
 //    public GameObject ground;
 
-    public textchanging Textchanging;
-
     [HideInInspector]
-
-//    PushBlockSettings m_PushBlockSettings;
-
-    /// The goal for the agent to reach.
-//    public GameObject goal;
-
-    /// <summary>
-    /// Detects when the block touches the goal.
-    /// </summary>
-//    [HideInInspector]
-//    public GoalDetect goalDetect;
 
     public bool useVectorObs;
 
     Rigidbody m_AgentRb;  //cached on initialization
                           //    Material m_GroundMaterial; //cached on Awake()
 
-    GoalPosSideChannel posSideChannel;
-    RayPerceptionSensorComponent3D ray;
-    /// <summary>
-    /// We will be changing the ground material based on success/failue
-    /// </summary>
-//    Renderer m_GroundRenderer;
+    ObsSideChannel obsSideChannel;
+    public textchanging Textchanging;
+    RayPerceptionSensorComponent3D RayInput;
+    CameraSensorComponent CameraInput;
 
     void Awake()
     {
-        //        m_PushBlockSettings = FindObjectOfType<PushBlockSettings>();
-
-        posSideChannel = new GoalPosSideChannel();
-        SideChannelManager.RegisterSideChannel(posSideChannel);
+        obsSideChannel = new ObsSideChannel();
+        SideChannelManager.RegisterSideChannel(obsSideChannel);
     }
 
     public override void Initialize()
     {
         // Cache the agent rigidbody
         m_AgentRb = GetComponent<Rigidbody>();
-        // Get the ground renderer so we can change the material when a goal is scored
-//        m_GroundRenderer = ground.GetComponent<Renderer>();
-        // Starting material
-//        m_GroundMaterial = m_GroundRenderer.material;
-
         SetResetParameters();
     }
 
     public void OnDestroy()
     {
-        SideChannelManager.UnregisterSideChannel(posSideChannel);
+        SideChannelManager.UnregisterSideChannel(obsSideChannel);
     }
 
     public static float randomGoalX = 0f;
@@ -239,7 +217,7 @@ public class PushAgentBasic : Agent
             new Vector3(randomGoalX, randomGoalY, randomGoalZ), GoalInfo.Item1, GoalInfo.Item2, GoalInfo.Item3);
         AddReward(-1f / MaxStep);
 
-        posSideChannel.SendGoalPosToPython(GoalInfo.Item1, GoalInfo.Item2, GoalInfo.Item3);
+        obsSideChannel.SendObsToPython(GoalInfo.Item1, GoalInfo.Item2, GoalInfo.Item3);
 
     }
 
