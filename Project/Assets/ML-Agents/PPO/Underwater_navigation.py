@@ -52,11 +52,11 @@ class Underwater_navigation():
                              obs_img_ray[1][13], obs_img_ray[1][15], obs_img_ray[1][17],
                              obs_img_ray[1][19], obs_img_ray[1][21]]) * 12 * 0.8
         if obstacle_dis < 0.6:
-            reward_ray = -10
+            reward_obstacle = -10
             done = True
             print("Too close to the obstacle!\n\n\n")
         else:
-            reward_ray = 0
+            reward_obstacle = 0
 
         # 2. give a positive reward if the robot reaches the goal
         if obs_goal[0] < 0.3 and obs_goal[1] < 0.05:
@@ -67,17 +67,20 @@ class Underwater_navigation():
             reward_goal_reached = 0
 
         # 3. give a positive reward if the robot is reaching the goal
-        reward_goal_reaching = (-np.abs(obs_goal[2]) + np.pi / 3) / 10
+        reward_goal_reaching = (-np.abs(np.deg2rad(obs_goal[2])) + np.pi / 3) / 10
 
         # 4. give a negative reward if the robot usually turns its directions
         reward_turning = - np.abs(action_rot) / 10
 
-        reward = reward_ray + reward_goal_reached + reward_goal_reaching + reward_turning
+        reward = reward_obstacle + reward_goal_reached + reward_goal_reaching + reward_turning
         self.step_count += 1
 
-        if self.step_count > 200:
+        if self.step_count > 500:
             done = True
             print("Exceeds the max num_step...\n\n\n")
+
+        # print("rewards of step", self.step_count, ":", reward_obstacle, reward_goal_reached,
+        #       reward_goal_reaching, reward_turning, reward)
 
         # the observation value for ray should be scaled
         return [obs_img_ray[0], np.min([obs_img_ray[1][1], obs_img_ray[1][3], obs_img_ray[1][5]]) * 12 * 0.8, obs_goal], \
@@ -88,10 +91,9 @@ env = Underwater_navigation()
 while True:
     done = False
     obs = env.reset()
-    print("new episode!\n\n\n")
     # cv2.imwrite("img1.png", 256 * cv2.cvtColor(obs[0], cv2.COLOR_RGB2BGR))
     while not done:
-        obs, reward, done, _ = env.step([0.0, -1.0])
-        print(obs[1], np.shape(obs[1]))
+        obs, reward, done, _ = env.step([0.0, - 1.0])
+        # print(obs[1], np.shape(obs[1]))
         # cv2.imwrite("img2.png", 256 * cv2.cvtColor(obs[0], cv2.COLOR_RGB2BGR))
 
