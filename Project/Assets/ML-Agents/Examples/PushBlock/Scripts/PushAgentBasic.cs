@@ -193,7 +193,7 @@ public class PushAgentBasic : Agent
         var dirToGo = Vector3.zero;
         var rotateDir = Vector3.zero;
 
-        dirToGo = transform.forward * 0.25f + transform.up * act0;
+        dirToGo = transform.forward * 0.15f + transform.up * act0;
         rotateDir = transform.up * act1;
 
         transform.Rotate(rotateDir, Time.fixedDeltaTime * 20f * Abs(act1));

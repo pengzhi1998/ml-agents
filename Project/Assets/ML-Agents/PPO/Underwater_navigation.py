@@ -31,13 +31,17 @@ class Underwater_navigation():
         self.env = UnityToGymWrapper(unity_env, allow_multiple_obs=True)
 
     def reset(self):
+        self.step_count = 0
         obs_img_ray = self.env.reset()
         obs_goal = self.pos_info.goal_info()
         return [obs_img_ray[0], np.min([obs_img_ray[1][1], obs_img_ray[1][3], obs_img_ray[1][5]]) * 12 * 0.8, obs_goal]
 
 
     def step(self, action):
-        obs_img_ray, _, done, _ = self.env.step(action)
+        # action[0] controls its vertical speed, action[1] controls its rotation speed
+        action_ver = action[0]/5
+        action_rot = action[1] * np.pi/6
+        obs_img_ray, _, done, _ = self.env.step([action_ver, action_rot])
         obs_goal = self.pos_info.goal_info()
         done = False
 
@@ -50,20 +54,34 @@ class Underwater_navigation():
         if obstacle_dis < 0.6:
             reward_ray = -10
             done = True
+            print("Too close to the obstacle!\n\n\n")
         else:
             reward_ray = 0
 
         # 2. give a positive reward if the robot reaches the goal
         if obs_goal[0] < 0.3 and obs_goal[1] < 0.05:
-            reward_goal = 10
+            reward_goal_reached = 10
             done = True
+            print("Reached the goal area!\n\n\n")
         else:
-            reward_goal = 0
+            reward_goal_reached = 0
 
-        # 3.
+        # 3. give a positive reward if the robot is reaching the goal
+        reward_goal_reaching = (-np.abs(obs_goal[2]) + np.pi / 3) / 10
+
+        # 4. give a negative reward if the robot usually turns its directions
+        reward_turning = - np.abs(action_rot) / 10
+
+        reward = reward_ray + reward_goal_reached + reward_goal_reaching + reward_turning
+        self.step_count += 1
+
+        if self.step_count > 200:
+            done = True
+            print("Exceeds the max num_step...\n\n\n")
 
         # the observation value for ray should be scaled
-        return [obs_img_ray[0], np.min([obs_img_ray[1][1], obs_img_ray[1][3], obs_img_ray[1][5]]) * 12 * 0.8, obs_goal], 0, done, 0
+        return [obs_img_ray[0], np.min([obs_img_ray[1][1], obs_img_ray[1][3], obs_img_ray[1][5]]) * 12 * 0.8, obs_goal], \
+               reward, done, 0
 
 env = Underwater_navigation()
 
@@ -73,7 +91,7 @@ while True:
     print("new episode!\n\n\n")
     # cv2.imwrite("img1.png", 256 * cv2.cvtColor(obs[0], cv2.COLOR_RGB2BGR))
     while not done:
-        obs, reward, done, _ = env.step([0.0, 0.0])
+        obs, reward, done, _ = env.step([0.0, -1.0])
         print(obs[1], np.shape(obs[1]))
         # cv2.imwrite("img2.png", 256 * cv2.cvtColor(obs[0], cv2.COLOR_RGB2BGR))
 
