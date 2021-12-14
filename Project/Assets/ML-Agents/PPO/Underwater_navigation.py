@@ -19,10 +19,10 @@ class PosChannel(SideChannel):
         Note: We must implement this method of the SideChannel interface to
         receive messages from Unity
         """
-        self.goal = msg.read_float32_list()
+        self.goal_depthfromwater = msg.read_float32_list()
 
-    def goal_info(self):
-        return self.goal
+    def goal_depthfromwater_info(self):
+        return self.goal_depthfromwater
 
 class Underwater_navigation():
     def __init__(self):
@@ -33,8 +33,9 @@ class Underwater_navigation():
     def reset(self):
         self.step_count = 0
         obs_img_ray = self.env.reset()
-        obs_goal = self.pos_info.goal_info()
-        return [obs_img_ray[0], np.min([obs_img_ray[1][1], obs_img_ray[1][3], obs_img_ray[1][5]]) * 12 * 0.8, obs_goal]
+        obs_goal_depthfromwater = self.pos_info.goal_depthfromwater_info()
+        return [obs_img_ray[0], np.min([obs_img_ray[1][1], obs_img_ray[1][3], obs_img_ray[1][5]]) * 12 * 0.8,
+                [obs_goal_depthfromwater[0], obs_goal_depthfromwater[1], obs_goal_depthfromwater[2]]]
 
 
     def step(self, action):
@@ -42,7 +43,7 @@ class Underwater_navigation():
         action_ver = action[0]/5
         action_rot = action[1] * np.pi/6
         obs_img_ray, _, done, _ = self.env.step([action_ver, action_rot])
-        obs_goal = self.pos_info.goal_info()
+        obs_goal_depthfromwater = self.pos_info.goal_depthfromwater_info()
         done = False
 
         # compute reward
@@ -51,7 +52,7 @@ class Underwater_navigation():
                              obs_img_ray[1][7], obs_img_ray[1][9], obs_img_ray[1][11],
                              obs_img_ray[1][13], obs_img_ray[1][15], obs_img_ray[1][17],
                              obs_img_ray[1][19], obs_img_ray[1][21]]) * 12 * 0.8
-        if obstacle_dis < 0.6:
+        if obstacle_dis < 0.6 and obs_goal_depthfromwater[3] < 0.2:
             reward_obstacle = -10
             done = True
             print("Too close to the obstacle!\n\n\n")
@@ -59,7 +60,7 @@ class Underwater_navigation():
             reward_obstacle = 0
 
         # 2. give a positive reward if the robot reaches the goal
-        if obs_goal[0] < 0.3 and obs_goal[1] < 0.05:
+        if obs_goal_depthfromwater[0] < 0.3 and obs_goal_depthfromwater[1] < 0.05:
             reward_goal_reached = 10
             done = True
             print("Reached the goal area!\n\n\n")
@@ -67,7 +68,7 @@ class Underwater_navigation():
             reward_goal_reached = 0
 
         # 3. give a positive reward if the robot is reaching the goal
-        reward_goal_reaching = (-np.abs(np.deg2rad(obs_goal[2])) + np.pi / 3) / 10
+        reward_goal_reaching = (-np.abs(np.deg2rad(obs_goal_depthfromwater[2])) + np.pi / 3) / 10
 
         # 4. give a negative reward if the robot usually turns its directions
         reward_turning = - np.abs(action_rot) / 10
@@ -83,7 +84,8 @@ class Underwater_navigation():
         #       reward_goal_reaching, reward_turning, reward)
 
         # the observation value for ray should be scaled
-        return [obs_img_ray[0], np.min([obs_img_ray[1][1], obs_img_ray[1][3], obs_img_ray[1][5]]) * 12 * 0.8, obs_goal], \
+        return [obs_img_ray[0], np.min([obs_img_ray[1][1], obs_img_ray[1][3], obs_img_ray[1][5]]) * 12 * 0.8,
+                [obs_goal_depthfromwater[0], obs_goal_depthfromwater[1], obs_goal_depthfromwater[2]]], \
                reward, done, 0
 
 env = Underwater_navigation()

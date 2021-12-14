@@ -211,13 +211,13 @@ public class PushAgentBasic : Agent
         MoveAgent(continuous_actions[0], continuous_actions[1]);
 
         // Penalty given each step to encourage agent to finish task quickly.
-        var GoalInfo = GetGoalInfo(); // horizontal_distance, vertical_distance, angle_rb_2_g
+        var ObsInfo = GetObsInfo(); // horizontal_distance, vertical_distance, angle_rb_2_g
 
         Textchanging.show_position(m_AgentRb.transform.position, m_AgentRb.transform.eulerAngles[1],
-            new Vector3(randomGoalX, randomGoalY, randomGoalZ), GoalInfo.Item1, GoalInfo.Item2, GoalInfo.Item3);
+            new Vector3(randomGoalX, randomGoalY, randomGoalZ), ObsInfo.Item1, ObsInfo.Item2, ObsInfo.Item3);
         AddReward(-1f / MaxStep);
 
-        obsSideChannel.SendObsToPython(GoalInfo.Item1, GoalInfo.Item2, GoalInfo.Item3);
+        obsSideChannel.SendObsToPython(ObsInfo.Item1, ObsInfo.Item2, ObsInfo.Item3, ObsInfo.Item4);
 
     }
 
@@ -242,7 +242,7 @@ public class PushAgentBasic : Agent
     /// </summary>
     public static float horizontal_distance = 0f;
     public static float angle_rb_2_g = 0f;
-    public (float, float, float) GetGoalInfo() {
+    public (float, float, float, float) GetObsInfo() {
         Vector3 Current_pos = m_AgentRb.transform.position;
 
         /// first compute the distance from robot to goal
@@ -258,7 +258,7 @@ public class PushAgentBasic : Agent
         float dir = (Vector3.Dot(Vector3.up, Vector3.Cross(m_AgentRb.transform.forward, angle_goal_vector_proj)) < 0 ? 1 : -1);
         angle_rb_2_g *= dir; // source implementation: https://blog.csdn.net/qq_14838361/article/details/79459391
 
-        return (horizontal_distance, (Current_pos[1] - randomGoalY), angle_rb_2_g);
+        return (horizontal_distance, (randomGoalY - Current_pos[1]), angle_rb_2_g, Current_pos[1]);
     }
 
 //    set the haze, fog and attenuation here
