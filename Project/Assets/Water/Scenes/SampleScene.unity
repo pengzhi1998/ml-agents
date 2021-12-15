@@ -586,6 +586,11 @@ PrefabInstance:
       propertyPath: m_DetectableTags.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8964598783836598940, guid: 03bcc81e249714a22bb411dddcc5d15e,
+        type: 3}
+      propertyPath: DecisionPeriod
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114451319691753174, guid: 03bcc81e249714a22bb411dddcc5d15e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 03bcc81e249714a22bb411dddcc5d15e, type: 3}

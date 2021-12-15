@@ -17,4 +17,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/ML-Agents/Examples/PushBlock/Scenes/PushBlock.unity
     guid: ae8cc75939e3e4d07a79c8c6a08b54f4
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 8aacdaa598949c0cf9eb08963577ac44,
+      type: 2}

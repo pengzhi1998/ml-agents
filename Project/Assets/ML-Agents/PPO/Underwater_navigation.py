@@ -2,6 +2,7 @@ from mlagents_envs.environment import UnityEnvironment
 from gym_unity.envs import UnityToGymWrapper
 import numpy as np
 import cv2
+import os
 from mlagents_envs.side_channel.side_channel import (
     SideChannel,
     IncomingMessage,
@@ -27,7 +28,8 @@ class PosChannel(SideChannel):
 class Underwater_navigation():
     def __init__(self):
         self.pos_info = PosChannel()
-        unity_env = UnityEnvironment("/home/pengzhi1998/Unity/ml-agents/environments/water", side_channels=[self.pos_info])
+        unity_env = UnityEnvironment("/home/pengzhi1998/navigation/mega_navigation/"
+                                     "Robotics_Navigation/underwater_env/water", side_channels=[self.pos_info])
         self.env = UnityToGymWrapper(unity_env, allow_multiple_obs=True)
 
     def reset(self):
@@ -89,13 +91,14 @@ class Underwater_navigation():
                reward, done, 0
 
 env = Underwater_navigation()
-
+import os
 while True:
     done = False
     obs = env.reset()
     # cv2.imwrite("img1.png", 256 * cv2.cvtColor(obs[0], cv2.COLOR_RGB2BGR))
     while not done:
-        obs, reward, done, _ = env.step([0.0, - 1.0])
+        obs, reward, done, _ = env.step([1.0,  1.0])
+        # print(os.path.abspath("./"))
         # print(obs[1], np.shape(obs[1]))
         # cv2.imwrite("img2.png", 256 * cv2.cvtColor(obs[0], cv2.COLOR_RGB2BGR))
 
